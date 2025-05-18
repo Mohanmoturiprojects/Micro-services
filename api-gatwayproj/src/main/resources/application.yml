@@ -1,0 +1,21 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: 'true'
+    register-with-eureka: 'true'
+spring:
+  cloud:
+    gateway:
+      routes[0]:
+        id: springmicroservice
+        uri: lb://springmicroservice
+        predicates[0]: Path=/api/v1/currency/**
+      routes[1]:
+        uri: lb://currency-exchange
+        id: currency-exchange
+        predicates[0]: Path=/api/v1/from/{from}/to/{to}
+  application:
+    name: api-gatwayproj
+server:
+  port: '7777'
